@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  test-app:
+    docker:
+      - image: circleci/python:3.7
+
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
+      PYTHON_CODE_PATH: "*.py"
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - v1-dependencies-
+
+      - run: php install pipenv
+
+      - run: pipenv install --dev
+
+      - run:
+          name: pycodestyle check
+          command: pipenv run pycodestyle ${PYTHON_CODE_PATH}
+
+      - run:
+          name: pydocstyle check
+          command: pipenv run pydocstyle ${PYTHON_CODE_PATH}
+
+      - run:
+          name: pyflakes check
+          command: pipenv run pyflakes ${PYTHON_CODE_PATH}
+
+      - run:
+          name: mypy check
+          command: pipenv run mypy ${PYTHON_CODE_PATH} --ignore-missing-imports
+
+      - save_cache:
+          paths:
+            - .venv
+          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports

@@ -1,0 +1,25 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pycodestyle = "*"
+pytest = "*"
+pytest-aiohttp = "*"
+vcrpy = "*"
+pydocstyle = "*"
+pytest-cov = "*"
+pyflakes = "*"
+mypy = "*"
+autopep8 = "*"
+freezegun = "*"
+
+[packages]
+aiohttp = "*"
+sqlalchemy = "*"
+requests = "*"
+python-json-logger = "*"
+
+[requires]
+python_version = "3.7"
