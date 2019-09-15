@@ -51,4 +51,4 @@ workflows:
 
   test:
     jobs:
-      - test-app:
+      - test-app
